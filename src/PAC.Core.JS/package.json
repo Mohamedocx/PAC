@@ -1,0 +1,28 @@
+{
+  "name": "@pac/core",
+  "version": "1.0.0",
+  "description": "PAC (Personal Address Code) - Core library for encoding/decoding geographic coordinates to shareable text codes",
+  "main": "dist/index.js",
+  "module": "dist/index.mjs",
+  "types": "dist/index.d.ts",
+  "scripts": {
+    "build": "tsup index.ts --format cjs,esm --dts",
+    "test": "vitest",
+    "lint": "eslint ."
+  },
+  "keywords": [
+    "geolocation",
+    "geohash",
+    "address",
+    "geocoding",
+    "pac"
+  ],
+  "author": "PAC Team",
+  "license": "MIT",
+  "devDependencies": {
+    "@types/node": "^20.0.0",
+    "tsup": "^8.0.0",
+    "typescript": "^5.3.0",
+    "vitest": "^1.0.0"
+  }
+}

@@ -1,0 +1,14 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <Version>1.0.0</Version>
+    <Authors>PAC Team</Authors>
+    <Description>PAC (Personal Address Code) - Core library for encoding/decoding geographic coordinates to shareable text codes</Description>
+    <PackageTags>geolocation;geohash;address;geocoding</PackageTags>
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
+  </PropertyGroup>
+
+</Project>

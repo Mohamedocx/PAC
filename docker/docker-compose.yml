@@ -1,0 +1,41 @@
+version: '3.8'
+
+services:
+  pac-api:
+    build:
+      context: ..
+      dockerfile: docker/Dockerfile.api
+    container_name: pac-api
+    ports:
+      - "5000:5000"
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Production
+      - ApiKey__Secret=${API_SECRET:-change-this-secret-in-production}
+      - Cors__AllowedOrigins__0=http://localhost:5173
+      - Cors__AllowedOrigins__1=https://yourdomain.com
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:5000/healthz"]
+      interval: 30s
+      timeout: 3s
+      retries: 3
+      start_period: 5s
+    networks:
+      - pac-network
+
+  pac-web:
+    build:
+      context: ../src/PAC.Web
+      dockerfile: ../../docker/Dockerfile.web
+    container_name: pac-web
+    ports:
+      - "5173:80"
+    depends_on:
+      - pac-api
+    restart: unless-stopped
+    networks:
+      - pac-network
+
+networks:
+  pac-network:
+    driver: bridge
