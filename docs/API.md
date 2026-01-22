@@ -2,7 +2,7 @@
 
 ## Base URL
 ```
-Production: https://api.pac.example.com
+Production: NOt yey
 Development: http://localhost:5000
 ```
 

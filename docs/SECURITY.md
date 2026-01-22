@@ -332,8 +332,8 @@ We monitor:
 
 Subscribe to security advisories:
 - GitHub Security Advisories
-- Email: security-advisories@pac.example.com
-- RSS: https://pac.example.com/security/advisories.xml
+- Email: moahmedyousif28@gmail.com
+
 
 ## Contact
 
