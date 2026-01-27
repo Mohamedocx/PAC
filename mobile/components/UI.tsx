@@ -88,66 +88,79 @@ export function FieldCard({
 }
 
 // --- Button ---
-
 interface ButtonProps {
     onPress: () => void;
-    title: string;
+    title?: string; // ✅ صار اختياري
     icon?: keyof typeof Feather.glyphMap;
-    variant?: 'primary' | 'secondary' | 'danger' | 'success' | 'dark' | 'disabled';
+    variant?: 'primary' | 'secondary' | 'danger' | 'success' | 'dark';
     disabled?: boolean;
     loading?: boolean;
     style?: any;
+
+    // ✅ جديد: زر أيقونة فقط
+    iconOnly?: boolean;
 }
 
-export function Button({ onPress, title, icon, variant = 'primary', disabled, loading, style }: ButtonProps) {
-    let colors = [COLORS.slate900, COLORS.slate900];
+export function Button({
+    onPress,
+    title = '',
+    icon,
+    variant = 'primary',
+    disabled,
+    loading,
+    style,
+    iconOnly,
+}: ButtonProps) {
+    let colors: [string, string] = [COLORS.slate900, COLORS.slate900];
     let text = COLORS.white;
     let border = 'transparent';
     let useGradient = false;
 
     if (variant === 'primary') {
-        // Blue Gradient
-        colors = ['#3b82f6', '#1d4ed8']; // Blue 500 -> Blue 700
+        colors = ['#3b82f6', '#1d4ed8'];
         text = COLORS.white;
         useGradient = true;
     } else if (variant === 'dark') {
-        // Slate Gradient
-        colors = ['#334155', '#0f172a']; // Slate 700 -> Slate 900
+        colors = ['#334155', '#0f172a'];
         text = COLORS.white;
         useGradient = true;
     } else if (variant === 'secondary') {
         colors = [COLORS.white, COLORS.white];
         text = COLORS.slate900;
         border = COLORS.slate200;
+        useGradient = false;
     } else if (variant === 'success') {
         colors = [COLORS.emerald50, COLORS.emerald50];
         text = COLORS.emerald700;
         border = COLORS.emerald200;
+        useGradient = false;
     } else if (variant === 'danger') {
         colors = [COLORS.rose50, COLORS.rose50];
         text = COLORS.rose700;
         border = COLORS.rose200;
-    } else if (variant === 'disabled') {
-        colors = [COLORS.slate100, COLORS.slate100];
-        text = COLORS.slate400;
-        border = COLORS.slate200;
-    }
-
-    if (disabled) {
-        colors = [COLORS.slate100, COLORS.slate100];
-        text = COLORS.slate400;
-        border = COLORS.slate200;
         useGradient = false;
     }
 
+    const showTitle = !iconOnly && !!title?.trim();
+    const isIconOnly = !!icon && (iconOnly || !showTitle) && !loading;
+
+    // ✅ padding حسب الحالة (زر عادي أو أيقونة فقط)
+    const contentPadding = {
+        paddingVertical: useGradient ? 0 : (isIconOnly ? 10 : 16),
+        paddingHorizontal: useGradient ? 0 : (isIconOnly ? 10 : 24),
+    };
+
+    const iconMarginRight = showTitle ? 8 : 0;
+
     const content = (
-        <View style={[styles.buttonContent, { paddingVertical: useGradient ? 0 : 16, paddingHorizontal: useGradient ? 0 : 24 }]}>
+        <View style={[styles.buttonContent, contentPadding]}>
             {loading ? (
-                <ActivityIndicator color={text} size="small" style={{ marginRight: 8 }} />
+                <ActivityIndicator color={text} size="small" style={{ marginRight: iconMarginRight }} />
             ) : icon ? (
-                <Feather name={icon} size={20} color={text} style={{ marginRight: 8 }} />
+                <Feather name={icon} size={20} color={text} style={{ marginRight: iconMarginRight }} />
             ) : null}
-            <Text style={[styles.buttonText, { color: text }]}>{title}</Text>
+
+            {showTitle && <Text style={[styles.buttonText, { color: text }]}>{title}</Text>}
         </View>
     );
 
@@ -155,19 +168,26 @@ export function Button({ onPress, title, icon, variant = 'primary', disabled, lo
         <TouchableOpacity
             onPress={onPress}
             disabled={disabled || loading}
+            activeOpacity={0.85}
             style={[
                 styles.buttonContainer,
+                // ✅ لو مش gradient حط background/border
                 !useGradient && { backgroundColor: colors[0], borderColor: border, borderWidth: 1 },
-                style
+                // ✅ بدل “مربع أبيض”: خفف opacity فقط
+                (disabled || loading) && { opacity: 0.55 },
+                style,
             ]}
-            activeOpacity={0.8}
         >
             {useGradient ? (
                 <LinearGradient
-                    colors={colors as [string, string]}
+                    colors={colors}
                     start={{ x: 0, y: 0 }}
                     end={{ x: 0, y: 1 }}
-                    style={styles.gradient}
+                    style={[
+                        styles.gradient,
+                        // ✅ gradient padding حسب الحالة
+                        { paddingVertical: isIconOnly ? 10 : 16, paddingHorizontal: isIconOnly ? 10 : 24 },
+                    ]}
                 >
                     {content}
                 </LinearGradient>
@@ -178,7 +198,7 @@ export function Button({ onPress, title, icon, variant = 'primary', disabled, lo
     );
 }
 
-// --- Segmented Control Button ---
+// --- SegButton ---
 export function SegButton({
     active,
     onPress,
@@ -191,19 +211,8 @@ export function SegButton({
     title: string;
 }) {
     return (
-        <TouchableOpacity
-            onPress={onPress}
-            style={[
-                styles.segButton,
-                active && styles.segButtonActive,
-            ]}
-        >
-            <Feather
-                name={icon}
-                size={16}
-                color={active ? COLORS.white : COLORS.slate500}
-                style={{ marginRight: 6 }}
-            />
+        <TouchableOpacity onPress={onPress} style={[styles.segButton, active && styles.segButtonActive]}>
+            <Feather name={icon} size={16} color={active ? COLORS.white : COLORS.slate500} style={{ marginRight: 6 }} />
             <Text style={[styles.segText, active && styles.segTextActive]}>{title}</Text>
         </TouchableOpacity>
     );
@@ -224,10 +233,7 @@ export function Chip({
     return (
         <TouchableOpacity
             onPress={onPress}
-            style={[
-                styles.chip,
-                active ? styles.chipActive : styles.chipInactive,
-            ]}
+            style={[styles.chip, active ? styles.chipActive : styles.chipInactive]}
         >
             <View style={styles.chipRow}>
                 <Text style={[styles.chipTitle, active && { color: COLORS.blue700 }]}>{title}</Text>
@@ -304,6 +310,7 @@ const styles = StyleSheet.create({
         fontWeight: '600',
         color: COLORS.slate900,
     },
+
     buttonContainer: {
         borderRadius: 16,
         overflow: 'hidden',
@@ -314,8 +321,7 @@ const styles = StyleSheet.create({
         elevation: 3,
     },
     gradient: {
-        paddingVertical: 16,
-        paddingHorizontal: 24,
+        // padding بيتحدد ديناميكياً
     },
     buttonContent: {
         flexDirection: 'row',
@@ -327,6 +333,7 @@ const styles = StyleSheet.create({
         fontSize: 16,
         fontWeight: '800',
     },
+
     segButton: {
         flex: 1,
         flexDirection: 'row',
@@ -352,6 +359,7 @@ const styles = StyleSheet.create({
     segTextActive: {
         color: COLORS.white,
     },
+
     chip: {
         flex: 1,
         borderWidth: 1,

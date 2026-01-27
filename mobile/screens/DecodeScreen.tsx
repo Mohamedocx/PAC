@@ -17,26 +17,30 @@ export default function DecodeScreen() {
     const [isValid, setIsValid] = useState(false);
 
     // Debounced Validation
-    useEffect(() => {
-        const timer = setTimeout(() => {
-            if (!pacCode.trim()) {
-                setValidationMsg('');
-                setIsValid(false);
-                return;
-            }
+    const [isChecking, setIsChecking] = useState(false);
 
-            const result = validate(pacCode.trim());
-            if (result.isValid) {
-                setValidationMsg('PAC Code Valid');
-                setIsValid(true);
-            } else {
-                setValidationMsg(result.reason || 'Invalid Code');
-                setIsValid(false);
-            }
+    useEffect(() => {
+        const value = pacCode.trim();
+
+        if (!value) {
+            setValidationMsg('');
+            setIsValid(false);
+            setIsChecking(false);
+            return;
+        }
+
+        setIsChecking(true);
+
+        const timer = setTimeout(() => {
+            const result = validate(value);
+            setIsValid(result.isValid);
+            setValidationMsg(result.isValid ? 'PAC Code Valid' : (result.reason || 'Invalid Code'));
+            setIsChecking(false);
         }, 300);
 
         return () => clearTimeout(timer);
     }, [pacCode]);
+
 
     const handleDecode = () => {
         if (!isValid) return;
@@ -116,11 +120,10 @@ export default function DecodeScreen() {
                                 title=""
                                 icon="trash-2"
                                 onPress={() => setPacCode('')}
-                                variant="secondary"
-                                // mini button style override
-                                // @ts-ignore
+                                variant="dark"
                                 style={styles.clearBtn}
                             />
+
                         )}
                     </View>
 
@@ -132,6 +135,8 @@ export default function DecodeScreen() {
                             loading={loading}
                             disabled={!isValid || loading}
                         />
+
+
                     </View>
                 </Card>
 
@@ -295,10 +300,10 @@ const styles = StyleSheet.create({
         textAlign: 'left', // Keep LTR for input
     },
     clearBtn: {
-        width: 30,
-        paddingHorizontal: 0,
-        backgroundColor: 'transparent',
-        borderWidth: 0
+        width: 44,
+        height: 44,
+        borderRadius: 22,
+        marginRight: 6,
     },
     resultContainer: {
         marginTop: 20,

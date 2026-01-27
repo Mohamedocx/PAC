@@ -27,7 +27,9 @@
       "package": "com.pac.mobile",
       "permissions": [
         "ACCESS_FINE_LOCATION",
-        "ACCESS_COARSE_LOCATION"
+        "ACCESS_COARSE_LOCATION",
+        "android.permission.ACCESS_COARSE_LOCATION",
+        "android.permission.ACCESS_FINE_LOCATION"
       ],
       "edgeToEdgeEnabled": true,
       "predictiveBackGestureEnabled": false,
@@ -47,6 +49,11 @@
           "locationAlwaysAndWhenInUsePermission": "Allow PAC to use your location to generate address codes."
         }
       ]
-    ]
+    ],
+    "extra": {
+      "eas": {
+        "projectId": "8fc0ba74-0f50-4b4a-ac00-a9904206895b"
+      }
+    }
   }
 }

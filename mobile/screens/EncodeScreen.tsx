@@ -222,7 +222,7 @@ export default function EncodeScreen() {
                             icon="target"
                             onPress={handleGenerate}
                             disabled={!canGenerate}
-                            variant={canGenerate ? 'primary' : 'disabled'}
+                            variant="secondary"
                         />
                     </View>
 

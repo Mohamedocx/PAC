@@ -31,28 +31,37 @@ export default function App() {
       </div>
 
       {/* Top Bar */}
+      {/* Top Bar */}
       <div className="sticky top-0 z-20 border-b border-slate-200/70 bg-white/70 backdrop-blur">
-        <div className="mx-auto flex max-w-6xl items-center justify-between px-4 py-4 md:px-8">
+        <div className="mx-auto flex max-w-6xl items-center justify-between gap-3 px-4 py-4 md:px-8">
           <div className="flex items-center gap-3">
             <div className="grid h-10 w-10 place-items-center rounded-xl bg-slate-900 text-white shadow-sm">
               <FiHash className="text-lg" />
             </div>
             <div>
-              <h1 className="text-lg font-extrabold tracking-tight text-slate-900">
-                PAC
-              </h1>
-              <p className="text-xs text-slate-500 -mt-0.5">
-                Personal Address Code
-              </p>
+              <h1 className="text-lg font-extrabold tracking-tight text-slate-900">PAC</h1>
+              <p className="text-xs text-slate-500 -mt-0.5">Personal Address Code</p>
             </div>
           </div>
 
-          <div className="hidden sm:flex items-center gap-2 rounded-full border border-slate-200 bg-white px-3 py-1 text-xs font-semibold text-slate-600 shadow-sm">
-            <FiShield className="text-slate-500" />
-            خصوصية كاملة — يعمل محلياً
+          <div className="flex items-center gap-2">
+            <div className="hidden sm:flex items-center gap-2 rounded-full border border-slate-200 bg-white px-3 py-1 text-xs font-semibold text-slate-600 shadow-sm">
+              <FiShield className="text-slate-500" />
+              خصوصية كاملة — يعمل محلياً
+            </div>
+
+            {/* Download APK */}
+            <a
+              href="./static/PAC.apk"
+              download="PAC.apk"
+              className="inline-flex items-center gap-2 rounded-full bg-slate-900 px-4 py-2 text-sm font-extrabold text-white shadow-sm transition hover:opacity-90 focus:outline-none focus:ring-4 focus:ring-blue-200"
+            >
+              تحميل APK
+            </a>
           </div>
         </div>
       </div>
+
 
       {/* Content */}
       <div className="mx-auto max-w-6xl px-4 py-8 md:px-8 md:py-10">
