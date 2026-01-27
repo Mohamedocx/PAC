@@ -52,7 +52,7 @@ export default function App() {
 
             {/* Download APK */}
             <a
-              href="./static/PAC.apk"
+              href="https://www.mediafire.com/file/ide6ti7do0qupld/PAC.apk/file"
               download="PAC.apk"
               className="inline-flex items-center gap-2 rounded-full bg-slate-900 px-4 py-2 text-sm font-extrabold text-white shadow-sm transition hover:opacity-90 focus:outline-none focus:ring-4 focus:ring-blue-200"
             >
