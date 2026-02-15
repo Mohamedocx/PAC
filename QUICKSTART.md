@@ -166,17 +166,6 @@ docker-compose -f docker/docker-compose.yml down
 - **Precision 8**: ~19m دقة (مناسب للمنازل)
 - **Precision 9**: ~2.4m دقة (دقة عالية)
 
-### هل يمكن استخدامه تجارياً؟
-**نعم!** المشروع مرخص تحت MIT License - مجاني للاستخدام التجاري.
-
----
-
-## 🆘 الدعم
-
-- 📧 Email: support@pac.example.com
-- 💬 Discord: [Join community](https://discord.gg/pac)
-- 🐛 Issues: [GitHub Issues](https://github.com/pac/issues)
-
 ---
 
 **استمتع باستخدام PAC! 🎉**
