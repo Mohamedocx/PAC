@@ -145,14 +145,6 @@ docker-compose -f docker/docker-compose.yml down
 
 ---
 
-## 📖 الخطوات التالية
-
-1. **اقرأ التوثيق**: [docs/README.md](docs/README.md)
-2. **جرّب الأمثلة**: [examples/DeliveryService.cs](examples/DeliveryService.cs)
-3. **راجع المواصفات**: [docs/PAC-SPEC.md](docs/PAC-SPEC.md)
-4. **تعلّم الأمان**: [docs/SECURITY.md](docs/SECURITY.md)
-
----
 
 ## ❓ أسئلة شائعة
 
